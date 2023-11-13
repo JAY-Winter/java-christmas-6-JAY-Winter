@@ -51,13 +51,16 @@ public class OrderMenu {
         validateMaximumQuantity(parsedItems);
     }
 
+    private static Stream<Menu> getAllMenuItems() {
+        return Stream.of(MainMenu.values(), DrinkMenu.values(), DessertMenu.values())
+            .flatMap(Arrays::stream);
+    }
+
     private static void validateValidMenu(String[] items) {
         for (String item : items) {
             String name = item.split("-")[0].trim();
 
-            boolean isValid = Stream.concat(Arrays.stream(MainMenu.values()),
-                    Stream.concat(Arrays.stream(DrinkMenu.values()),
-                        Arrays.stream(DessertMenu.values())))
+            boolean isValid = getAllMenuItems()
                 .map(Menu::getName)
                 .anyMatch(menuName -> menuName.equals(name));
 
@@ -66,6 +69,7 @@ public class OrderMenu {
             }
         }
     }
+
 
     private static void validateDuplicateMenu(String[] items) {
         Set<String> menuNames = new HashSet<>();
