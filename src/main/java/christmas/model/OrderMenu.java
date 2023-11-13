@@ -15,9 +15,9 @@ public class OrderMenu {
         this.orderMenus = orderMenuItems;
     }
 
-    public static OrderMenu from(String[] orderMenus) {
+    public static OrderMenu from(String orderMenus) {
         validate(orderMenus);
-        return new OrderMenu(convert(orderMenus));
+        return new OrderMenu(convert(getParsedInputWithComma(orderMenus)));
     }
 
     private static List<OrderMenuItem> convert(String[] orderMenus) {
@@ -42,11 +42,13 @@ public class OrderMenu {
     }
 
 
-    private static void validate(String[] items) {
-        validateValidMenu(items);
-        validateDuplicateMenu(items);
-        validateMinimumQuantity(items);
-        validateMaximumQuantity(items);
+    private static void validate(String items) {
+        validateSpecialCharacter(items);
+        String[] parsedItems = getParsedInputWithComma(items);
+        validateValidMenu(parsedItems);
+        validateDuplicateMenu(parsedItems);
+        validateMinimumQuantity(parsedItems);
+        validateMaximumQuantity(parsedItems);
     }
 
     private static void validateValidMenu(String[] items) {
@@ -102,6 +104,20 @@ public class OrderMenu {
         if (total_quantity > MAXIMUM_QUANTITY) {
             throw new IllegalArgumentException(
                 "[ERROR] 주문 가능 개수는 20개 입니다. 다시 입력해 주세요.");
+        }
+    }
+
+    private static String[] getParsedInputWithComma(String input) {
+        validateSpecialCharacter(input);
+        String[] items = input.split(",");
+        return items;
+    }
+
+    private static void validateSpecialCharacter(String input) {
+        String regex = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
+
+        if (!input.matches(regex)) {
+            throw new IllegalArgumentException("[ERROR] 메뉴 주문 형식에 맞게 주문해주세요.");
         }
     }
 
