@@ -141,4 +141,13 @@ public class OrderMenu {
     public List<OrderMenuItem> getOrderMenus() {
         return orderMenus;
     }
+
+    public double getTotalPriceBeforeDiscount(OrderMenu orderMenuItems) {
+        double total_price_before_discount = 0;
+        for (OrderMenuItem orderMenuItem : orderMenuItems.getOrderMenus()) {
+            total_price_before_discount +=
+                orderMenuItem.getMenu().getPrice() * orderMenuItem.getQuantity();
+        }
+        return total_price_before_discount;
+    }
 }
