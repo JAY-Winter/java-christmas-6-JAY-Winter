@@ -32,9 +32,7 @@ public class OrderMenu {
     }
 
     private static Menu getMenu(String menuName) {
-        Stream<Menu> combinedStream = Stream.concat(Arrays.stream(MainMenu.values()),
-            Stream.concat(Arrays.stream(DrinkMenu.values()),
-                Arrays.stream(DessertMenu.values())));
+        Stream<Menu> combinedStream = getAllMenuItems();
         return combinedStream
             .filter(menu -> menu.getName().equals(menuName))
             .findFirst()
@@ -45,14 +43,30 @@ public class OrderMenu {
     private static void validate(String items) {
         validateSpecialCharacter(items);
         String[] parsedItems = getParsedInputWithComma(items);
+        validateOnlyDrink(parsedItems);
         validateValidMenu(parsedItems);
         validateDuplicateMenu(parsedItems);
         validateMinimumQuantity(parsedItems);
         validateMaximumQuantity(parsedItems);
     }
 
+    private static String[] getParsedInputWithComma(String input) {
+        validateSpecialCharacter(input);
+        String[] items = input.split(",");
+        return items;
+    }
+
+    private static void validateSpecialCharacter(String input) {
+        String regex = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
+
+        if (!input.matches(regex)) {
+            throw new IllegalArgumentException("[ERROR] 메뉴 주문 형식에 맞게 주문해주세요.");
+        }
+    }
+
     private static Stream<Menu> getAllMenuItems() {
-        return Stream.of(MainMenu.values(), DrinkMenu.values(), DessertMenu.values())
+        return Stream.of(AppetizerMenu.values(), MainMenu.values(), DrinkMenu.values(),
+                DessertMenu.values())
             .flatMap(Arrays::stream);
     }
 
@@ -69,7 +83,6 @@ public class OrderMenu {
             }
         }
     }
-
 
     private static void validateDuplicateMenu(String[] items) {
         Set<String> menuNames = new HashSet<>();
@@ -111,17 +124,17 @@ public class OrderMenu {
         }
     }
 
-    private static String[] getParsedInputWithComma(String input) {
-        validateSpecialCharacter(input);
-        String[] items = input.split(",");
-        return items;
-    }
+    private static void validateOnlyDrink(String[] items) {
+        Set<String> drinkMenuNames = Arrays.stream(DrinkMenu.values())
+            .map(DrinkMenu::getName)
+            .collect(Collectors.toSet());
 
-    private static void validateSpecialCharacter(String input) {
-        String regex = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
+        boolean allItemsAreDrinks = Arrays.stream(items)
+            .map(item -> item.split("-")[0])
+            .allMatch(drinkMenuNames::contains);
 
-        if (!input.matches(regex)) {
-            throw new IllegalArgumentException("[ERROR] 메뉴 주문 형식에 맞게 주문해주세요.");
+        if (allItemsAreDrinks) {
+            throw new IllegalArgumentException("[ERROR] 음료만 주문 시 주문할 수 없습니다. 다시 입력해 주세요.");
         }
     }
 

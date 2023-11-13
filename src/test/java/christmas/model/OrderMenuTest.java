@@ -30,6 +30,13 @@ class OrderMenuTest {
     }
 
     @Test
+    void 음료만_주문한_경우() {
+        String invalidMenus = "제로콜라-1,레드와인-2";
+        assertThatThrownBy(() -> OrderMenu.from(invalidMenus))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 최대주문_개수는_20개입니다() {
         String invalidMenus = "해산물파스타-2,레드와인-10,초코케이크-10";
         assertThatThrownBy(() -> OrderMenu.from(invalidMenus))
