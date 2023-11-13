@@ -1,15 +1,15 @@
 package christmas.model;
 
-public enum DessertMenu implements Menu {
-    CHOCOLATE_CAKE("초코케이크", 15000, "초코케이크입니다"),
-    ICE_CREAM("아이스크림", 5500, "아이스크림입니다");
+public enum AppetizerMenu implements Menu {
+    MUSHROOM_SOUP("양송수프", 6000, "양송이수프입니다"),
+    TAPAS("타파스", 5500, "타파스입니다"),
+    CAESAR_SALAD("시저샐러드", 8000, "시저샐러드입니다");
 
     private final String name;
     private final double price;
     private final String description;
 
-
-    DessertMenu(String name, double price, String description) {
+    AppetizerMenu(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -17,16 +17,16 @@ public enum DessertMenu implements Menu {
 
     @Override
     public String getName() {
-        return name;
+        return null;
     }
 
     @Override
     public double getPrice() {
-        return price;
+        return 0;
     }
 
     @Override
     public String getDescription() {
-        return description;
+        return null;
     }
 }
