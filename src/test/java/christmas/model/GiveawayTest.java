@@ -2,6 +2,7 @@ package christmas.model;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import christmas.model.menu.Giveaway;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
