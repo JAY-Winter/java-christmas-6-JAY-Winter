@@ -16,12 +16,6 @@ public class SpecialDiscount implements DiscountStrategy {
     private static final int DAILY_INCREMENT = 100;
     private static final int SPECIAL_DAY_DISCOUNT = 1000;
 
-
-    private static boolean isWithinEventPeriod(VisitDate visitDate) {
-        return !visitDate.getLocalDate().isBefore(START_DATE) && !visitDate.getLocalDate()
-            .isAfter(END_DATE);
-    }
-
     public static boolean isSpecialDay(VisitDate visitDate) {
         return SpecialDays.contains(visitDate);
     }
@@ -65,5 +59,10 @@ public class SpecialDiscount implements DiscountStrategy {
     @Override
     public boolean isApply(Order order) {
         return SpecialDays.contains(order.getVisitDate());
+    }
+
+    private static boolean isWithinEventPeriod(VisitDate visitDate) {
+        return !visitDate.getLocalDate().isBefore(START_DATE) && !visitDate.getLocalDate()
+            .isAfter(END_DATE);
     }
 }
