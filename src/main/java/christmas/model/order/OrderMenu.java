@@ -20,6 +20,7 @@ public class OrderMenu {
     private static final String MINIMUM_QUANTITY_ERROR = "주문은 최소 1개 부터 가능합니다. 다시 입력해 주세요.";
     private static final String MAXIMUM_QUANTITY_ERROR = "주문 가능 개수는 20개 입니다. 다시 입력해 주세요.";
     private static final String ONLY_DRINK_MENU_ERROR = "음료만 주문 시 주문할 수 없습니다. 다시 입력해 주세요.";
+    private static final String VALID_ORDER_INPUT_REGEX = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
     private final List<OrderMenuItem> orderMenus;
 
     public OrderMenu(List<OrderMenuItem> orderMenuItems) {
@@ -67,9 +68,7 @@ public class OrderMenu {
     }
 
     private static void validateSpecialCharacter(String input) {
-        String regex = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
-
-        if (!input.matches(regex)) {
+        if (!input.matches(VALID_ORDER_INPUT_REGEX)) {
             throw new ErrorMessage(INVALID_MENU_ERROR);
         }
     }
