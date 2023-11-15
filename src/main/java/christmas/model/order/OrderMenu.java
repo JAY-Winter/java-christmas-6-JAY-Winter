@@ -5,6 +5,7 @@ import christmas.model.menu.DessertMenu;
 import christmas.model.menu.DrinkMenu;
 import christmas.model.menu.MainMenu;
 import christmas.model.menu.Menu;
+import christmas.util.ErrorMessage;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,11 @@ import java.util.stream.Stream;
 
 public class OrderMenu {
 
+    private static final String NOT_FOUND_MENU_ERROR = "메뉴를 찾을 수 없습니다.";
+    private static final String INVALID_MENU_ERROR = "유효하지 않은 주문입니다. 다시 입력해 주세요.";
+    private static final String MINIMUM_QUANTITY_ERROR = "주문은 최소 1개 부터 가능합니다. 다시 입력해 주세요.";
+    private static final String MAXIMUM_QUANTITY_ERROR = "주문 가능 개수는 20개 입니다. 다시 입력해 주세요.";
+    private static final String ONLY_DRINK_MENU_ERROR = "음료만 주문 시 주문할 수 없습니다. 다시 입력해 주세요.";
     private final List<OrderMenuItem> orderMenus;
 
     public OrderMenu(List<OrderMenuItem> orderMenuItems) {
@@ -41,7 +47,7 @@ public class OrderMenu {
         return combinedStream
             .filter(menu -> menu.getName().equals(menuName))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 메뉴를 찾을 수 없습니다."));
+            .orElseThrow(() -> new ErrorMessage(NOT_FOUND_MENU_ERROR));
     }
 
 
@@ -64,7 +70,7 @@ public class OrderMenu {
         String regex = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
 
         if (!input.matches(regex)) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new ErrorMessage(INVALID_MENU_ERROR);
         }
     }
 
@@ -83,7 +89,7 @@ public class OrderMenu {
                 .anyMatch(menuName -> menuName.equals(name));
 
             if (!isValid) {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new ErrorMessage(INVALID_MENU_ERROR);
             }
         }
     }
@@ -96,7 +102,7 @@ public class OrderMenu {
             .filter(name -> !menuNames.add(name))
             .findFirst()
             .ifPresent(name -> {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new ErrorMessage(INVALID_MENU_ERROR);
             });
     }
 
@@ -107,8 +113,7 @@ public class OrderMenu {
             int quantity = Integer.parseInt(parts[1].trim());
 
             if (quantity < MINIMUM_QUANTITY) {
-                throw new IllegalArgumentException(
-                    "[ERROR] 주문은 최소 1개 부터 가능합니다. 다시 입력해 주세요.");
+                throw new ErrorMessage(MINIMUM_QUANTITY_ERROR);
             }
         }
     }
@@ -123,8 +128,7 @@ public class OrderMenu {
         }
 
         if (total_quantity > MAXIMUM_QUANTITY) {
-            throw new IllegalArgumentException(
-                "[ERROR] 주문 가능 개수는 20개 입니다. 다시 입력해 주세요.");
+            throw new ErrorMessage(MAXIMUM_QUANTITY_ERROR);
         }
     }
 
@@ -138,7 +142,7 @@ public class OrderMenu {
             .allMatch(drinkMenuNames::contains);
 
         if (allItemsAreDrinks) {
-            throw new IllegalArgumentException("[ERROR] 음료만 주문 시 주문할 수 없습니다. 다시 입력해 주세요.");
+            throw new ErrorMessage(ONLY_DRINK_MENU_ERROR);
         }
     }
 

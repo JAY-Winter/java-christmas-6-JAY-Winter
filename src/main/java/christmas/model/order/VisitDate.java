@@ -1,10 +1,13 @@
 package christmas.model.order;
 
-import java.time.DayOfWeek;
+import christmas.util.ErrorMessage;
 import java.time.LocalDate;
 
 public class VisitDate {
 
+    private static final String INVALID_DATE = "유효하지 않은 날짜입니다. 다시 입력해 주세요.";
+    private static final int FIRST_DAY = 1;
+    private static final int LAST_DAY = 31;
     private final LocalDate localDate;
 
     public VisitDate(String visitDate) {
@@ -26,22 +29,17 @@ public class VisitDate {
         try {
             Integer.parseInt(visitDate);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            throw new ErrorMessage(INVALID_DATE);
         }
     }
 
     private void validateRange(int date) {
-        if (date < 1 || date > 31) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+        if (date < FIRST_DAY || date > LAST_DAY) {
+            throw new ErrorMessage(INVALID_DATE);
         }
     }
 
     public LocalDate getLocalDate() {
         return localDate;
-    }
-
-    public boolean isWeekend() {
-        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
-        return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
     }
 }
