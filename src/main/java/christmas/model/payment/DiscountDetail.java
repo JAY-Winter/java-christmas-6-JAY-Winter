@@ -14,4 +14,12 @@ public class DiscountDetail {
     public String toString() {
         return description + " : -" + amount + "원";
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
 }

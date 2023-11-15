@@ -1,6 +1,6 @@
 package christmas.model.payment;
 
-import christmas.model.menu.Giveaway;
+import christmas.model.giveaway.Giveaway;
 import christmas.model.order.Order;
 import java.util.ArrayList;
 import java.util.List;
