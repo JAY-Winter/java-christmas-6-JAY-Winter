@@ -17,7 +17,8 @@ public class GiveawayDiscount implements DiscountStrategy {
     @Override
     public List<DiscountDetail> getDiscountDetails(Order order) {
         return new ArrayList<>(
-            List.of(new DiscountDetail("증정 이벤트", calculateDiscount(order), new DefaultStrategy())));
+            List.of(new DiscountDetail(DiscountDescription.DISCOUNT_DESCRIPTION.getDescription(), calculateDiscount(order),
+                new DefaultStrategy())));
     }
 
     @Override

@@ -19,7 +19,7 @@ public class WeekendDiscount implements DiscountStrategy {
     @Override
     public List<DiscountDetail> getDiscountDetails(Order order) {
         return new ArrayList<>(
-            List.of(new DiscountDetail("주말 할인", calculateDiscount(order), new DefaultStrategy())));
+            List.of(new DiscountDetail(DiscountDescription.WEEKEND.getDescription(), calculateDiscount(order), new DefaultStrategy())));
     }
 
     @Override
