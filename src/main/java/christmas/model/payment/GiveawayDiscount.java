@@ -1,5 +1,6 @@
 package christmas.model.payment;
 
+import christmas.model.benefit.DefaultStrategy;
 import christmas.model.giveaway.Giveaway;
 import christmas.model.order.Order;
 import java.util.ArrayList;
@@ -16,6 +17,6 @@ public class GiveawayDiscount implements DiscountStrategy {
     @Override
     public List<DiscountDetail> getDiscountDetails(Order order) {
         return new ArrayList<>(
-            List.of(new DiscountDetail("증정 이벤트", calculateDiscount(order))));
+            List.of(new DiscountDetail("증정 이벤트", calculateDiscount(order), new DefaultStrategy())));
     }
 }

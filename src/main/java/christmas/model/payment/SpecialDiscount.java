@@ -1,5 +1,6 @@
 package christmas.model.payment;
 
+import christmas.model.benefit.DefaultStrategy;
 import christmas.model.order.Order;
 import christmas.model.order.VisitDate;
 import java.time.LocalDate;
@@ -51,11 +52,11 @@ public class SpecialDiscount implements DiscountStrategy {
         if (isWithinEventPeriod(order.getVisitDate())) {
             int daysSinceStart = orderDate.getDayOfMonth() - START_DATE.getDayOfMonth();
             double discount = START_DISCOUNT + DAILY_INCREMENT * daysSinceStart;
-            details.add(new DiscountDetail("크리스마스 디데이 할인", discount));
+            details.add(new DiscountDetail("크리스마스 디데이 할인", discount, new DefaultStrategy()));
         }
 
         if (isSpecialDay(order.getVisitDate())) {
-            details.add(new DiscountDetail("특별 할인", SPECIAL_DAY_DISCOUNT));
+            details.add(new DiscountDetail("특별 할인", SPECIAL_DAY_DISCOUNT, new DefaultStrategy()));
         }
 
         return details;

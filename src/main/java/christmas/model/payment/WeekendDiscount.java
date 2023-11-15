@@ -1,5 +1,6 @@
 package christmas.model.payment;
 
+import christmas.model.benefit.DefaultStrategy;
 import christmas.model.order.Order;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,6 @@ public class WeekendDiscount implements DiscountStrategy {
     @Override
     public List<DiscountDetail> getDiscountDetails(Order order) {
         return new ArrayList<>(
-            List.of(new DiscountDetail("주말 할인", calculateDiscount(order))));
+            List.of(new DiscountDetail("주말 할인", calculateDiscount(order), new DefaultStrategy())));
     }
 }

@@ -1,13 +1,18 @@
 package christmas.model.payment;
 
+import christmas.model.benefit.BenefitStrategy;
+
 public class DiscountDetail {
 
     private final String description;
     private final double amount;
 
-    public DiscountDetail(String description, double amount) {
+    private final BenefitStrategy benefitStrategy;
+
+    public DiscountDetail(String description, double amount, BenefitStrategy benefitStrategy) {
         this.description = description;
         this.amount = amount;
+        this.benefitStrategy = benefitStrategy;
     }
 
     @Override
