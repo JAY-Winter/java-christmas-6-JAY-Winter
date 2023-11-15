@@ -8,17 +8,13 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpecialDiscount implements DiscountStrategy {
+public class ChristmasDayDiscount implements DiscountStrategy {
 
     private static final LocalDate START_DATE = LocalDate.of(2023, Month.DECEMBER, 1);
-    private static final LocalDate END_DATE = LocalDate.of(2023, Month.DECEMBER, 31);
+    private static final LocalDate END_DATE = LocalDate.of(2023, Month.DECEMBER, 25);
     private static final int START_DISCOUNT = 1000;
     private static final int DAILY_INCREMENT = 100;
-    private static final int SPECIAL_DAY_DISCOUNT = 1000;
 
-    public static boolean isSpecialDay(VisitDate visitDate) {
-        return SpecialDays.contains(visitDate);
-    }
 
     @Override
     public double calculateDiscount(Order order) {
@@ -29,10 +25,6 @@ public class SpecialDiscount implements DiscountStrategy {
             int daysSinceStart = orderDate.getDayOfMonth() - START_DATE.getDayOfMonth();
             double discount = START_DISCOUNT + DAILY_INCREMENT * daysSinceStart;
             totalDiscount += discount;
-        }
-
-        if (isSpecialDay(order.getVisitDate())) {
-            totalDiscount += SPECIAL_DAY_DISCOUNT;
         }
 
         return totalDiscount;
@@ -46,11 +38,9 @@ public class SpecialDiscount implements DiscountStrategy {
         if (isWithinEventPeriod(order.getVisitDate())) {
             int daysSinceStart = orderDate.getDayOfMonth() - START_DATE.getDayOfMonth();
             double discount = START_DISCOUNT + DAILY_INCREMENT * daysSinceStart;
-            details.add(new DiscountDetail(DiscountDescription.CHRISTMAS_DDAY.getDescription(), discount, new DefaultStrategy()));
-        }
-
-        if (isSpecialDay(order.getVisitDate())) {
-            details.add(new DiscountDetail(DiscountDescription.SPECIAL_DAY.getDescription(), SPECIAL_DAY_DISCOUNT, new DefaultStrategy()));
+            details.add(
+                new DiscountDetail(DiscountDescription.CHRISTMAS_DDAY.getDescription(), discount,
+                    new DefaultStrategy()));
         }
 
         return details;

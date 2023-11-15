@@ -4,7 +4,8 @@ import christmas.model.order.Order;
 import christmas.model.payment.DiscountManager;
 import christmas.model.payment.DiscountStrategy;
 import christmas.model.payment.GiveawayDiscount;
-import christmas.model.payment.SpecialDiscount;
+import christmas.model.payment.ChristmasDayDiscount;
+import christmas.model.payment.SpecialDayDiscount;
 import christmas.model.payment.WeekdayDiscount;
 import christmas.model.payment.WeekendDiscount;
 import christmas.util.Retry;
@@ -27,8 +28,8 @@ public class Controller {
         Order order = Retry.retryOnException(inputView::inputOrder);
 
         List<DiscountStrategy> discountStrategies = new ArrayList<>(
-            List.of(new GiveawayDiscount(), new SpecialDiscount(), new WeekendDiscount(),
-                new WeekdayDiscount())
+            List.of(new GiveawayDiscount(), new ChristmasDayDiscount(), new WeekendDiscount(),
+                new WeekdayDiscount(), new SpecialDayDiscount())
         );
 
         DiscountManager discountManager = new DiscountManager(discountStrategies, order);
