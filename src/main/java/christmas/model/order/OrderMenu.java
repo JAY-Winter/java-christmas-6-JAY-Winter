@@ -32,6 +32,29 @@ public class OrderMenu {
         return new OrderMenu(convert(getParsedInputWithComma(orderMenus)));
     }
 
+    public double getTotalPriceBeforeDiscount() {
+        double total_price_before_discount = 0;
+        for (OrderMenuItem orderMenuItem : orderMenus) {
+            total_price_before_discount +=
+                orderMenuItem.getMenu().getPrice() * orderMenuItem.getQuantity();
+        }
+        return total_price_before_discount;
+    }
+
+    public int getMainMenuCount() {
+        return orderMenus.stream()
+            .filter(item -> item.getMenu() instanceof MainMenu)
+            .mapToInt(OrderMenuItem::getQuantity)
+            .sum();
+    }
+
+    public int getDessertMenuCount() {
+        return orderMenus.stream()
+            .filter(item -> item.getMenu() instanceof DessertMenu)
+            .mapToInt(OrderMenuItem::getQuantity)
+            .sum();
+    }
+
     private static List<OrderMenuItem> convert(String[] orderMenus) {
         return Arrays.stream(orderMenus)
             .map(orderMenu -> {
@@ -147,28 +170,5 @@ public class OrderMenu {
 
     public List<OrderMenuItem> getOrderMenus() {
         return orderMenus;
-    }
-
-    public double getTotalPriceBeforeDiscount() {
-        double total_price_before_discount = 0;
-        for (OrderMenuItem orderMenuItem : orderMenus) {
-            total_price_before_discount +=
-                orderMenuItem.getMenu().getPrice() * orderMenuItem.getQuantity();
-        }
-        return total_price_before_discount;
-    }
-
-    public int getMainMenuCount() {
-        return orderMenus.stream()
-            .filter(item -> item.getMenu() instanceof MainMenu)
-            .mapToInt(OrderMenuItem::getQuantity)
-            .sum();
-    }
-
-    public int getDessertMenuCount() {
-        return orderMenus.stream()
-            .filter(item -> item.getMenu() instanceof DessertMenu)
-            .mapToInt(OrderMenuItem::getQuantity)
-            .sum();
     }
 }
