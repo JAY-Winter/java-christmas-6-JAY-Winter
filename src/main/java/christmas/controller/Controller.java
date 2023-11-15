@@ -35,8 +35,7 @@ public class Controller {
             Arrays.asList(new GiveawayDiscount(), new SpecialDiscount(), new WeekendDiscount(),
                 new WeekdayDiscount()));
 
-        DiscountManager discountManager = new DiscountManager(discountStrategies);
-        discountManager.configure(order);
+        DiscountManager discountManager = new DiscountManager(discountStrategies, order);
 
         processOrderOverView(order);
 
