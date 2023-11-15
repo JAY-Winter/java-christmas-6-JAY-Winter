@@ -10,7 +10,7 @@ import java.util.List;
 public class OutputView {
 
     public void printEventBenefits(int day) {
-        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!", day);
+        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", day);
         System.out.println();
     }
 

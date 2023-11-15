@@ -1,11 +1,9 @@
 package christmas.controller;
 
 import christmas.dto.OrderMenuDto;
-import christmas.model.benefit.NoneStrategy;
 import christmas.model.order.Order;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.OrderMenuItem;
-import christmas.model.payment.DiscountDetail;
 import christmas.model.payment.DiscountManager;
 import christmas.util.Retry;
 import christmas.view.InputView;
@@ -33,13 +31,6 @@ public class Controller {
         processDiscountedOrderView(order, discountManager);
     }
 
-    public void processDiscountDetails(List<DiscountDetail> discountDetails) {
-        if (discountDetails.isEmpty()) {
-            discountDetails.add(new DiscountDetail("없음", 0, new NoneStrategy()));
-        }
-        outputView.displayDiscountDetails(discountDetails);
-    }
-
     private void processOrderOverView(Order order) {
         // 혜택 미리보기
         outputView.printEventBenefits(order.getVisitDate().getLocalDate().getDayOfMonth());
@@ -57,7 +48,7 @@ public class Controller {
         outputView.printGiveaway(order.getOrderMenu().getTotalPriceBeforeDiscount());
 
         // 혜택 내역
-        processDiscountDetails(discountManager.getDiscountDetails(order));
+        outputView.displayDiscountDetails(discountManager.getDiscountDetails(order));
 
         // 총혜택 금액
         outputView.printTotalDiscountPrice(discountManager.applyDiscounts(order));

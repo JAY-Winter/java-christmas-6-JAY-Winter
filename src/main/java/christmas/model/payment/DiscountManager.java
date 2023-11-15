@@ -1,5 +1,6 @@
 package christmas.model.payment;
 
+import christmas.model.benefit.NoneStrategy;
 import christmas.model.giveaway.Giveaway;
 import christmas.model.order.Order;
 import java.util.ArrayList;
@@ -17,9 +18,15 @@ public class DiscountManager {
     }
 
     public List<DiscountDetail> getDiscountDetails(Order order) {
-        return discountStrategies.stream()
+        List<DiscountDetail> discountDetails = discountStrategies.stream()
             .flatMap(strategy -> strategy.getDiscountDetails(order).stream())
             .collect(Collectors.toList());
+
+        if (discountDetails.isEmpty()) {
+            discountDetails.add(new DiscountDetail("없음", 0, new NoneStrategy()));
+        }
+
+        return discountDetails;
     }
 
     public void configureDiscountStrategies(Order order) {
