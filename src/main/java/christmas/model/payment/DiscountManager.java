@@ -24,10 +24,10 @@ public class DiscountManager {
 
     public void configureDiscountStrategies(Order order) {
         if (isAbleToGetBenefit(order.getOrderMenu().getTotalPriceBeforeDiscount())) {
-            isWeekend(order);
-            isWeekday(order);
-            isSpecialDay(order);
-            isGiveaway(order);
+            checkWeekendStrategy(order);
+            checkWeekdayStrategy(order);
+            checkSpecialDayStrategy(order);
+            checkGiveawayStrategy(order);
         }
     }
 
@@ -35,26 +35,25 @@ public class DiscountManager {
         return total_price_before_discount >= 10000;
     }
 
-    private static void isGiveaway(Order order) {
+    private static void checkGiveawayStrategy(Order order) {
         if (Giveaway.isEligibleForGiveaway(order.getOrderMenu().getTotalPriceBeforeDiscount())) {
             discountStrategies.add(new GiveawayDiscount());
         }
     }
 
-    private static void isWeekday(Order order) {
-        if (!order.getVisitDate().isWeekend()) {
+    private static void checkWeekdayStrategy(Order order) {
+        if (WeekdayDiscount.isWeekday(order.getVisitDate().getLocalDate().getDayOfWeek())) {
             discountStrategies.add(new WeekdayDiscount());
         }
     }
 
-    private static void isWeekend(Order order
-    ) {
-        if (order.getVisitDate().isWeekend()) {
+    private static void checkWeekendStrategy(Order order) {
+        if (WeekendDiscount.isWeekend(order.getVisitDate().getLocalDate().getDayOfWeek())) {
             discountStrategies.add(new WeekendDiscount());
         }
     }
 
-    private static void isSpecialDay(Order order) {
+    private static void checkSpecialDayStrategy(Order order) {
         if (SpecialDiscount.isSpecialDay(order.getVisitDate())) {
             discountStrategies.add(new SpecialDiscount());
         }
