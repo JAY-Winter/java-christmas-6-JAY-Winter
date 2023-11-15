@@ -11,7 +11,6 @@ import christmas.util.Retry;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Controller {
