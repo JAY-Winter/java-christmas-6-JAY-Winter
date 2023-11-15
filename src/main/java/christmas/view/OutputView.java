@@ -14,6 +14,25 @@ import java.util.List;
 
 public class OutputView {
 
+    public static void displayOrderedMenu(List<OrderMenuDto> orderMenuDtos) {
+        System.out.println("<주문 메뉴>");
+        for (OrderMenuDto dto : orderMenuDtos) {
+            System.out.println(dto);
+        }
+        System.out.println();
+    }
+
+
+    public static void displayDiscountDetails(List<DiscountDetail> discountDetails) {
+        System.out.println("<혜택 내역>");
+        for (DiscountDetail discountDetail : discountDetails) {
+            System.out.println(discountDetail);
+        }
+
+        System.out.println();
+    }
+
+
     public void printOrderProcess(Order order) {
         printEventBenefits();
         printOrderedMenu(order.getOrderMenu());
