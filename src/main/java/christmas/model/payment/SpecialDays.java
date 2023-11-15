@@ -18,8 +18,8 @@ public enum SpecialDays {
     }
 
     public static boolean contains(VisitDate visitdate) {
-        int dayofMonth = visitdate.getLocalDate().getDayOfMonth();
+        int dayOfMonth = visitdate.getLocalDate().getDayOfMonth();
         return Arrays.stream(SpecialDays.values())
-            .anyMatch(specialDay -> specialDay.getDayOfMonth() == dayofMonth);
+            .anyMatch(specialDay -> specialDay.getDayOfMonth() == dayOfMonth);
     }
 }
