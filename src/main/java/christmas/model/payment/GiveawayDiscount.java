@@ -19,4 +19,9 @@ public class GiveawayDiscount implements DiscountStrategy {
         return new ArrayList<>(
             List.of(new DiscountDetail("증정 이벤트", calculateDiscount(order), new DefaultStrategy())));
     }
+
+    @Override
+    public boolean isApply(Order order) {
+        return Giveaway.isEligibleForGiveaway(order.getOrderMenu().getTotalPriceBeforeDiscount());
+    }
 }

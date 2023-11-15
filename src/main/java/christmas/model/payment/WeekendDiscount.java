@@ -22,7 +22,9 @@ public class WeekendDiscount implements DiscountStrategy {
             List.of(new DiscountDetail("주말 할인", calculateDiscount(order), new DefaultStrategy())));
     }
 
-    public static boolean isWeekend(DayOfWeek dayOfWeek) {
+    @Override
+    public boolean isApply(Order order) {
+        DayOfWeek dayOfWeek = order.getVisitDate().getLocalDate().getDayOfWeek();
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
     }
 }

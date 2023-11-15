@@ -8,4 +8,6 @@ public interface DiscountStrategy {
     double calculateDiscount(Order order);
 
     List<DiscountDetail> getDiscountDetails(Order order);
+
+    boolean isApply(Order order);
 }

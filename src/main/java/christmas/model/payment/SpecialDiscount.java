@@ -61,4 +61,9 @@ public class SpecialDiscount implements DiscountStrategy {
 
         return details;
     }
+
+    @Override
+    public boolean isApply(Order order) {
+        return SpecialDays.contains(order.getVisitDate());
+    }
 }

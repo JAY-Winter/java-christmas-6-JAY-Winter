@@ -20,12 +20,4 @@ public class DiscountDetail {
     public String toString() {
         return description + " : -" + PriceFormat.formatPrice(amount);
     }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
 }
