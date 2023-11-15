@@ -1,6 +1,7 @@
 package christmas.model.payment;
 
 import christmas.model.benefit.BenefitStrategy;
+import christmas.util.PriceFormat;
 
 public class DiscountDetail {
 
@@ -17,7 +18,7 @@ public class DiscountDetail {
 
     @Override
     public String toString() {
-        return description + " : -" + amount + "원";
+        return description + " : -" + PriceFormat.formatPrice(amount);
     }
 
     public String getDescription() {
