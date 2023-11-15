@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.model.order.Order;
+import christmas.model.payment.DiscountDetail;
 import christmas.model.payment.DiscountManager;
 import christmas.model.payment.DiscountStrategy;
 import christmas.model.payment.GiveawayDiscount;
@@ -27,7 +28,8 @@ public class Controller {
         Order order = Retry.retryOnException(inputView::inputOrder);
 
         List<DiscountStrategy> discountStrategies = new ArrayList<>(
-            List.of(new GiveawayDiscount(), new SpecialDiscount(), new WeekendDiscount(), new WeekdayDiscount())
+            List.of(new GiveawayDiscount(), new SpecialDiscount(), new WeekendDiscount(),
+                new WeekdayDiscount())
         );
 
         DiscountManager discountManager = new DiscountManager(discountStrategies, order);

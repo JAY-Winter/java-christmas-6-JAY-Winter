@@ -20,9 +20,13 @@ public class OutputView {
         System.out.println();
     }
 
+
     public void displayDiscountDetails(List<DiscountDetail> discountDetails) {
         System.out.println("<혜택 내역>");
-        discountDetails.forEach(System.out::println);
+        discountDetails.forEach(discountDetail ->
+            System.out.println(discountDetail.getBenefitStrategy()
+                .formatOutput(discountDetail.getDescription(), discountDetail.getAmount()))
+        );
         System.out.println();
     }
 
