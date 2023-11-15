@@ -1,14 +1,16 @@
 package christmas.view;
 
+import christmas.dto.DiscountDetailDto;
+import christmas.dto.OrderMenuDto;
 import christmas.model.Badge;
-import christmas.model.menu.Giveaway;
+import christmas.model.giveaway.Giveaway;
 import christmas.model.order.Order;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.OrderMenuItem;
 import christmas.model.payment.DiscountDetail;
 import christmas.model.payment.DiscountManager;
+import christmas.util.PriceFormat;
 import java.util.List;
-import java.util.Optional;
 
 public class OutputView {
 
@@ -27,15 +29,18 @@ public class OutputView {
     public static void printOrderedMenu(OrderMenu orderMenu) {
         System.out.println("<주문 메뉴>");
         for (OrderMenuItem orderMenuItem : orderMenu.getOrderMenus()) {
-            System.out.println(
-                orderMenuItem.getMenu().getName() + " " + orderMenuItem.getQuantity() + "개");
+            OrderMenuDto orderMenuDto
+                = new OrderMenuDto(orderMenuItem.getMenu().getName(),
+                orderMenuItem.getQuantity());
+
+            System.out.println(orderMenuDto);
         }
         System.out.println();
     }
 
     public static void printTotalPriceBeforeDiscount(double totalPriceBeforeDiscount) {
         System.out.println("<할인 전 총주문 금액>");
-        System.out.println(totalPriceBeforeDiscount + "원");
+        System.out.println(PriceFormat.formatPrice(totalPriceBeforeDiscount));
         System.out.println();
     }
 
@@ -62,18 +67,18 @@ public class OutputView {
 
     public static void printGiveaway(double totalPriceBeforeDiscount) {
         System.out.println("<증정 메뉴>");
-        String giveaway = Giveaway.getGiveaway(totalPriceBeforeDiscount);
-        System.out.println(giveaway);
+        Giveaway test = Giveaway.getModel(totalPriceBeforeDiscount);
+        System.out.println(test.getFormattedOutput());
         System.out.println();
     }
 
     public static void printDiscountDetails(List<DiscountDetail> discountDetails) {
         System.out.println("<혜택 내역>");
-        Optional<String> details = discountDetails.stream()
-            .map(DiscountDetail::toString)
-            .reduce((detail1, detail2) -> detail1 + "\n" + detail2);
-
-        System.out.println(details.orElse("없음"));
+        for (DiscountDetail discountDetail : discountDetails) {
+            DiscountDetailDto discountDetailDto = new DiscountDetailDto(
+                discountDetail.getDescription(), discountDetail.getAmount());
+            System.out.println(discountDetailDto);
+        }
         System.out.println();
     }
 
@@ -85,7 +90,7 @@ public class OutputView {
 
     public static void printExpectedPrice(double expectedPrice) {
         System.out.println("<할인 후 예상 결제 금액>");
-        System.out.println(expectedPrice + "원");
+        System.out.println(PriceFormat.formatPrice(expectedPrice));
         System.out.println();
     }
 
@@ -97,6 +102,7 @@ public class OutputView {
     }
 
     private static String formatDiscountPrice(double totalDiscountPrice) {
-        return totalDiscountPrice == 0 ? totalDiscountPrice + "원" : "-" + totalDiscountPrice + "원";
+        return totalDiscountPrice == 0 ? PriceFormat.formatPrice(totalDiscountPrice)
+            : "-" + PriceFormat.formatPrice(totalDiscountPrice);
     }
 }
