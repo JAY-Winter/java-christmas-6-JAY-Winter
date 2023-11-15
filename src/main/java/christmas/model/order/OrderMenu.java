@@ -57,8 +57,7 @@ public class OrderMenu {
 
     private static String[] getParsedInputWithComma(String input) {
         validateSpecialCharacter(input);
-        String[] items = input.split(",");
-        return items;
+        return input.trim().split(",");
     }
 
     private static void validateSpecialCharacter(String input) {
