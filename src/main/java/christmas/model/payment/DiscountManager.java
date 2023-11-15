@@ -55,7 +55,7 @@ public class DiscountManager {
     }
 
     private static void isSpecialDay(Order order) {
-        if (order.getVisitDate().getLocalDate().getDayOfMonth() < 31) {
+        if (SpecialDiscount.isSpecialDay(order.getVisitDate())) {
             discountStrategies.add(new SpecialDiscount());
         }
     }

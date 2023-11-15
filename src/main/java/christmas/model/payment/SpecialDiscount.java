@@ -21,7 +21,7 @@ public class SpecialDiscount implements DiscountStrategy {
             .isAfter(END_DATE);
     }
 
-    private static boolean isSpecialDay(VisitDate visitDate) {
+    public static boolean isSpecialDay(VisitDate visitDate) {
         return SpecialDays.contains(visitDate);
     }
 
