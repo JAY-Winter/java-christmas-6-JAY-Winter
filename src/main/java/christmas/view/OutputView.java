@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class OutputView {
 
-    public static void printOrderProcess(Order order) {
+    public void printOrderProcess(Order order) {
         printEventBenefits();
         printOrderedMenu(order.getOrderMenu());
         printOrderPricing(order);

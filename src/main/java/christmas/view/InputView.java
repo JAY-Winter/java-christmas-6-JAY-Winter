@@ -8,7 +8,7 @@ import christmas.util.Retry;
 
 public class InputView {
 
-    public static Order inputOrder() {
+    public Order inputOrder() {
         VisitDate visitDate = Retry.retryOnException(InputView::inputVisitDate);
         OrderMenu orderMenu = Retry.retryOnException(InputView::inputOrderMenu);
         Console.close();
