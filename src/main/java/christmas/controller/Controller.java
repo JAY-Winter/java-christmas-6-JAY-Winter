@@ -40,15 +40,6 @@ public class Controller {
         outputView.displayDiscountDetails(discountDetails);
     }
 
-    public List<OrderMenuDto> getOrderMenuDtos(OrderMenu orderMenu) {
-        List<OrderMenuDto> dtos = new ArrayList<>();
-        for (OrderMenuItem item : orderMenu.getOrderMenus()) {
-            OrderMenuDto dto = new OrderMenuDto(item.getMenu().getName(), item.getQuantity());
-            dtos.add(dto);
-        }
-        return dtos;
-    }
-
     private void processOrderOverView(Order order) {
         // 혜택 미리보기
         outputView.printEventBenefits(order.getVisitDate().getLocalDate().getDayOfMonth());
@@ -76,6 +67,15 @@ public class Controller {
 
         // 12월 이벤트 배지
         outputView.printBadge(discountManager.applyDiscounts(order));
+    }
+
+    private List<OrderMenuDto> getOrderMenuDtos(OrderMenu orderMenu) {
+        List<OrderMenuDto> dtos = new ArrayList<>();
+        for (OrderMenuItem item : orderMenu.getOrderMenus()) {
+            OrderMenuDto dto = new OrderMenuDto(item.getMenu().getName(), item.getQuantity());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     private static double getExpectedPrice(Order order, DiscountManager discountManager) {
