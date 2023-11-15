@@ -20,4 +20,9 @@ public class OrderMenuItem {
     public int getQuantity() {
         return quantity;
     }
+
+    @Override
+    public String toString() {
+        return menu.getName() + " " + quantity + "개";
+    }
 }

@@ -1,8 +1,8 @@
 package christmas.view;
 
-import christmas.dto.OrderMenuDto;
 import christmas.model.Badge;
 import christmas.model.giveaway.Giveaway;
+import christmas.model.order.OrderMenu;
 import christmas.model.payment.DiscountDetail;
 import christmas.util.PriceFormat;
 import java.util.List;
@@ -14,9 +14,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public void displayOrderedMenu(List<OrderMenuDto> orderMenuDtos) {
+    public void displayOrderedMenu(OrderMenu orderMenu) {
         System.out.println("<주문 메뉴>");
-        orderMenuDtos.forEach(System.out::println);
+        orderMenu.getOrderMenus().forEach(System.out::println);
         System.out.println();
     }
 

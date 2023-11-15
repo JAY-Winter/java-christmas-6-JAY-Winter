@@ -1,9 +1,6 @@
 package christmas.controller;
 
-import christmas.dto.OrderMenuDto;
 import christmas.model.order.Order;
-import christmas.model.order.OrderMenu;
-import christmas.model.order.OrderMenuItem;
 import christmas.model.payment.DiscountManager;
 import christmas.model.payment.DiscountStrategy;
 import christmas.model.payment.GiveawayDiscount;
@@ -47,7 +44,7 @@ public class Controller {
         outputView.printEventBenefits(order.getVisitDate().getLocalDate().getDayOfMonth());
 
         // 주문 메뉴
-        outputView.displayOrderedMenu(getOrderMenuDtos(order.getOrderMenu()));
+        outputView.displayOrderedMenu(order.getOrderMenu());
 
         // 할인 전 총주문 금액
         outputView.printTotalPriceBeforeDiscount(
@@ -69,15 +66,6 @@ public class Controller {
 
         // 12월 이벤트 배지
         outputView.printBadge(discountManager.calculateTotalDiscountPrice(order));
-    }
-
-    private List<OrderMenuDto> getOrderMenuDtos(OrderMenu orderMenu) {
-        List<OrderMenuDto> dtos = new ArrayList<>();
-        for (OrderMenuItem item : orderMenu.getOrderMenus()) {
-            OrderMenuDto dto = new OrderMenuDto(item.getMenu().getName(), item.getQuantity());
-            dtos.add(dto);
-        }
-        return dtos;
     }
 
     private static double getExpectedPrice(Order order, DiscountManager discountManager) {
