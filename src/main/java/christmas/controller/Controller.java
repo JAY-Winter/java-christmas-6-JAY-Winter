@@ -1,7 +1,6 @@
 package christmas.controller;
 
 import christmas.model.order.Order;
-import christmas.model.payment.DiscountDetail;
 import christmas.model.payment.DiscountManager;
 import christmas.model.payment.DiscountStrategy;
 import christmas.model.payment.GiveawayDiscount;
