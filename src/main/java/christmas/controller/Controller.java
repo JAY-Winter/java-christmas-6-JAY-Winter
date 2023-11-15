@@ -27,10 +27,9 @@ public class Controller {
     public void run() {
         Order order = Retry.retryOnException(inputView::inputOrder);
 
-        List<DiscountStrategy> discountStrategies;
-        discountStrategies = new ArrayList<>(
-            Arrays.asList(new GiveawayDiscount(), new SpecialDiscount(), new WeekendDiscount(),
-                new WeekdayDiscount()));
+        List<DiscountStrategy> discountStrategies = new ArrayList<>(
+            List.of(new GiveawayDiscount(), new SpecialDiscount(), new WeekendDiscount(), new WeekdayDiscount())
+        );
 
         DiscountManager discountManager = new DiscountManager(discountStrategies, order);
 
